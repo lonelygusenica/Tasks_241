@@ -1,5 +1,6 @@
 # firewall
 
+
 **1) Установите iptables**  
 apt-get install iptables  
 
@@ -13,7 +14,7 @@ ssh student@95.31.204.147 -p 235
 После установки и настройки iptables могут быть добавлены правила, которые блокируют доступ к SSH. Если нет правил для разрешения доступа на порт 22, сервер может не принимать входящие соединения по этому порту.  
 
 **4) Откройте нужный порт на сервере чтобы восстановить подключение**  
-iptables -A INPUT -p tcp --dport 234 -j ACCEPT
+iptables -A INPUT -p tcp --dport 235 -j ACCEPT
 
 **5) Это будет udp или tcp прот?**  
 tcp  
@@ -23,19 +24,7 @@ tcp
 
 **7) Как их сохранить?**  
 vim /etc/systemd/system/iptables-restore.service  
-[Unit]  
-Description=Restore iptables firewall rules  
-After=network-pre.target  
-Wants=network-pre.target  
-  
-[Service]  
-Type=oneshot  
-ExecStart=/usr/sbin/iptables-restore /etc/sysconfig/iptables  
-RemainAfterExit=yes  
-
-[Install]  
-WantedBy=multi-user.target  
-After=network-pre.target и Wants=network-pre.target обеспечат запуск этого юнита до запуска сетевых сервисов, чтобы правила были применены до их старта.  
+![image](https://github.com/user-attachments/assets/e07b2b13-1287-4daa-85a0-38ca676e4a77)  
 
 systemctl daemon-reload  
 sudo systemctl enable iptables-restore.service  
